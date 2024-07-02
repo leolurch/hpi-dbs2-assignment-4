@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:16
+    # Required when running on platform other than amd64, like Apple M1/M2:
+    platform: linux/amd64
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'db'
+    ports:
+      - 5433:5432
