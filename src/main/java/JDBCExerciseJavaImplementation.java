@@ -6,9 +6,11 @@ import de.hpi.dbs1.entities.Movie;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -19,7 +21,19 @@ public class JDBCExerciseJavaImplementation implements JDBCExercise {
 
 	@Override
 	public Connection createConnection(@NotNull ConnectionConfig config) throws SQLException {
-		throw new UnsupportedOperationException("Not yet implemented");
+		Connection conn = null;
+		Properties props = new Properties();
+		props.put("user", config.getUsername());
+		props.put("password", config.getPassword());
+		props.put("db", config.getDatabase());
+
+		conn = DriverManager.getConnection(
+				"jdbc:postgresql://" +
+						config.getHost() +
+						":" + config.getPort() + "/",
+				props);
+
+		return conn;
 	}
 
 	@Override
